@@ -14,3 +14,38 @@ Room Chat App is a Web App that allows you to comunicate with other users throug
 - Send and receive messages in a room
 - Load old messages in a room
 - Leave room
+
+## User Interface
+
+I've come up with three different pages that represents the state of the app.
+
+### Auth Page - Allows the user to authenticate
+
+![Auth Page](assets/AuthPage.png)
+
+---
+
+### Main Page - Once authenticated the user can
+
+- Create Rooms
+- Join Rooms
+- See Rooms it belongs
+- Connect to Rooms
+- Leave Rooms
+- Log out
+
+![Main Page](assets/MainPage.png)
+
+---
+
+### Room Page - Once connected to a room the user can
+
+- Send Messages
+- Receive Messages
+- See old Messages
+- See room Members
+- Disconnect from the Room
+
+![Room Page](assets/RoomPage.png)
+
+---
