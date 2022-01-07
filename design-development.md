@@ -49,3 +49,15 @@ I've come up with three different pages that represents the state of the app.
 ![Room Page](assets/RoomPage.png)
 
 ---
+
+## Authentication
+
+In order to authenticate with google, I'll use [React Google Login](https://github.com/anthonyjgrove/react-google-login) to abstract the oAuth flow and get a `tokenId` then send it to the server and receive an `accessToken` in a cookie. Once I have the accessToken I can authenticate to the server by sending it in the `Authorization` header.
+
+![Authentication Flow](assets/AuthenticationFlow.png)
+
+## Real Time Architecture
+
+In order to achieve the real time features, I'm going to implement a [Publish–subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) using GraphQL Subscriptions.
+
+![Message Subscription Flow](assets/MessageSubscriptionFlow.png)
