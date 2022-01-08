@@ -104,7 +104,7 @@ type mutation {
   createRoom(name: String!): Room
   joinRoom(invitationCode: String!): Room
   sendMessage(message: String!): Message
-  leaveRoom(roomId: ID!): String
+  leaveRoom(roomId: ID!): ID
 }
 
 type subscription {
