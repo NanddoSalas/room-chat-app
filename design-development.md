@@ -61,3 +61,62 @@ In order to authenticate with google, I'll use [React Google Login](https://gith
 In order to achieve the real time features, I'm going to implement a [Publish–subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) using GraphQL Subscriptions.
 
 ![Message Subscription Flow](assets/MessageSubscriptionFlow.png)
+
+## GraphQL Schema
+
+I've created the next schema that will be the base for the interaction between the Web App and the server.
+
+```go
+type User {
+  id: ID!
+  name: String!
+  avatar: String!
+}
+
+type Room {
+  id: ID!
+  name: String!
+  adminId: String!
+  invitationCode: String
+}
+
+type Message {
+  id: ID!
+  message: String!
+  createdById: String!
+  createdAtId: String!
+}
+
+type MessagesPayload {
+  messages: [Message!]!
+  cursor: ID
+}
+
+type query {
+  me: User
+  rooms: [Room!]!
+  user(userId: ID!): User
+  roomMembers(roomId: ID!): [User!]!
+  messages(roomId: ID!, cursor: ID): MessagesPayload!
+}
+
+type mutation {
+  googleAuth(idToken: String!): User
+  createRoom(name: String!): Room
+  joinRoom(invitationCode: String!): Room
+  sendMessage(message: String!): Message
+  leaveRoom(roomId: ID!): String
+}
+
+type subscription {
+  newMessage(roomId: ID!): Message!
+  userJoinedRoom(roomId: ID!): User!
+  userLeavedRoom(roomId: ID!): String!
+}
+```
+
+## Database Model
+
+I've come up with the next database model.
+
+![Database Model](assets/DatabaseModel.png)
