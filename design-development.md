@@ -120,3 +120,15 @@ type subscription {
 I've come up with the next database model.
 
 ![Database Model](assets/DatabaseModel.png)
+
+## Technologies/Libraries
+
+This is a Full Stack `JavaScript/TypeScript` project that uses `GraphQL` for the data layer and some of the key Technologies/Libraries to use are the following:
+
+- [TypeORM](https://typeorm.io/#/) makes database modeling easy.
+- [TypeGraphQL](https://typegraphql.com) speeds up the GraphQL development.
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/) handle all the incoming GraphQL operations.
+- [GraphQL ws](https://github.com/enisdenjo/graphql-ws) handles the GraphQL Subscription layer.
+- [React](https://reactjs.org) because It's Simple to Read and Easy to Use.
+- [React Google Login](https://github.com/anthonyjgrove/react-google-login) abstracs the OAuth flow to authenticate with Google
+- [Apollo Client](https://www.apollographql.com/docs/react/) takes care of executing the GraphQL operations and manage the state of the app.
