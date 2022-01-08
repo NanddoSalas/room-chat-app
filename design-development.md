@@ -84,7 +84,6 @@ type Message {
   id: ID!
   message: String!
   createdById: String!
-  createdAtId: String!
 }
 
 type MessagesPayload {
