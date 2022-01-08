@@ -1,11 +1,22 @@
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
+import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
+import { createConnection } from 'typeorm';
+import entities from './entities';
+
+dotenv.config({ path: `${__dirname}/../../../.env` });
 
 const main = async () => {
+  await createConnection({
+    type: 'postgres',
+    url: process.env.POSTGRES_URL,
+    entities,
+  });
+
   const app = express();
 
   const httpServer = http.createServer(app);

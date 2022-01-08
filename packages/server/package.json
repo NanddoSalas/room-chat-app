@@ -7,7 +7,8 @@
     "build": "tsc",
     "dev:build": "tsc --watch",
     "dev:start": "nodemon --watch dist dist/index.js",
-    "dev": "concurrently \"yarn:dev:*\""
+    "dev": "concurrently \"yarn:dev:*\"",
+    "db:setup": "node dist/db/setup.js"
   },
   "license": "MIT",
   "devDependencies": {
@@ -28,9 +29,12 @@
     "apollo-server-core": "^3.6.1",
     "apollo-server-express": "^3.6.1",
     "class-validator": "^0.13.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "graphql": "15.8.0",
+    "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.41"
   }
 }
