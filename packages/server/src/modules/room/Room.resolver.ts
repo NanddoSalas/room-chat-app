@@ -52,8 +52,14 @@ class RoomResolver {
     room.name = name;
     room.admin = Promise.resolve(user!);
     room.invitationCode = short.generate();
+    await room.save();
 
-    return room.save();
+    const member = new Member();
+    member.user = Promise.resolve(user!);
+    member.room = Promise.resolve(room);
+    await member.save();
+
+    return room;
   }
 
   @AuthRequired()
@@ -103,11 +109,12 @@ class RoomResolver {
       }
     }
 
-    await Member.createQueryBuilder('member')
-      .where('member.userId = :userId', {
+    await Member.createQueryBuilder()
+      .delete()
+      .where('userId = :userId', {
         userId: user!.id,
       })
-      .andWhere('member.roomId = : roomId', { roomId })
+      .andWhere('roomId = :roomId', { roomId })
       .execute();
 
     return roomId;
