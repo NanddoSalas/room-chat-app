@@ -103,7 +103,7 @@ type mutation {
   googleAuth(idToken: String!): User
   createRoom(name: String!): Room
   joinRoom(invitationCode: String!): Room
-  sendMessage(message: String!): Message
+  sendMessage(message: String!, roomId: ID!): Message
   leaveRoom(roomId: ID!): ID
 }
 
