@@ -19,7 +19,7 @@ class RoomResolver {
   @AuthRequired()
   @Query(() => [User])
   async roomMembers(
-    @Arg('roomId') roomId: number,
+    @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
   ): Promise<User[]> {
     const member = await Member.findOne({
@@ -77,7 +77,7 @@ class RoomResolver {
   @AuthRequired()
   @Mutation(() => ID)
   async leaveRoom(
-    @Arg('roomId') roomId: number,
+    @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
   ): Promise<number | undefined> {
     const members = await Member.find({

@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, ID, Mutation, Query, Resolver } from 'type-graphql';
 import { AuthRequired } from '../../decorators';
 import { User } from '../../entities';
 import { Context } from '../../types';
@@ -13,7 +13,9 @@ class UserResolver {
 
   @AuthRequired()
   @Query(() => User, { nullable: true })
-  async user(@Arg('userId') userId: number): Promise<User | undefined> {
+  async user(
+    @Arg('userId', () => ID) userId: number,
+  ): Promise<User | undefined> {
     return User.findOne(userId);
   }
 
