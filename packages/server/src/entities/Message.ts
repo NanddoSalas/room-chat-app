@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Room, User } from '.';
@@ -25,10 +24,10 @@ class Message extends BaseEntity {
   createdAt: Date;
 
   @Field(() => ID)
-  @PrimaryColumn()
+  @Column()
   userId: number;
 
-  @PrimaryColumn()
+  @Column()
   roomId: number;
 
   @ManyToOne(() => User, (user) => user.messages)

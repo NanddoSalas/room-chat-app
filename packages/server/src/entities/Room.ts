@@ -6,7 +6,6 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Member, Message } from '.';
@@ -31,7 +30,7 @@ class Room extends BaseEntity {
   invitationCode: string;
 
   @Field(() => ID)
-  @PrimaryColumn()
+  @Column()
   adminId: number;
 
   @ManyToOne(() => User, (user) => user.rooms)

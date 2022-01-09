@@ -1,9 +1,9 @@
 import {
   BaseEntity,
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Room, User } from '.';
@@ -16,10 +16,10 @@ class Member extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @PrimaryColumn()
+  @Column()
   userId: number;
 
-  @PrimaryColumn()
+  @Column()
   roomId: number;
 
   @ManyToOne(() => User, (user) => user.memberOf)
