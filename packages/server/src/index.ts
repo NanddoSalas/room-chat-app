@@ -38,7 +38,13 @@ const main = async () => {
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({
+    app,
+    cors: {
+      origin: process.env.FRONTEND_URL,
+      credentials: true,
+    },
+  });
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve),
