@@ -1,4 +1,4 @@
-query Messages($cursor: Float, $roomId: Float!) {
+query Messages($cursor: ID, $roomId: ID!) {
   messages(cursor: $cursor, roomId: $roomId) {
     cursor
     messages {

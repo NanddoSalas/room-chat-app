@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, ID, Mutation, Query, Resolver } from 'type-graphql';
 import { AuthRequired } from '../../decorators';
 import { Member, Message, Room } from '../../entities';
 import { Context } from '../../types';
@@ -9,8 +9,8 @@ class MessageResolver {
   @AuthRequired()
   @Query(() => MessagesPayload)
   async messages(
-    @Arg('roomId') roomId: number,
-    @Arg('cursor', { nullable: true }) cursor: number,
+    @Arg('roomId', () => ID) roomId: number,
+    @Arg('cursor', () => ID, { nullable: true }) cursor: number,
     @Ctx() { user }: Context,
   ): Promise<MessagesPayload> {
     const member = await Member.findOne({
@@ -40,7 +40,7 @@ class MessageResolver {
   @Mutation(() => Message, { nullable: true })
   async sendMessage(
     @Arg('message') message: string,
-    @Arg('roomId') roomId: number,
+    @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
   ): Promise<Message | undefined> {
     const member = await Member.findOne({

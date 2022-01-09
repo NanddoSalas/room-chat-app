@@ -60,7 +60,7 @@ export type MutationLeaveRoomArgs = {
 
 export type MutationSendMessageArgs = {
   message: Scalars['String'];
-  roomId: Scalars['Float'];
+  roomId: Scalars['ID'];
 };
 
 export type Query = {
@@ -74,8 +74,8 @@ export type Query = {
 
 
 export type QueryMessagesArgs = {
-  cursor?: InputMaybe<Scalars['Float']>;
-  roomId: Scalars['Float'];
+  cursor?: InputMaybe<Scalars['ID']>;
+  roomId: Scalars['ID'];
 };
 
 
@@ -132,7 +132,7 @@ export type LeaveRoomMutationVariables = Exact<{
 export type LeaveRoomMutation = { __typename?: 'Mutation', leavedRoomId: string };
 
 export type SendMessageMutationVariables = Exact<{
-  roomId: Scalars['Float'];
+  roomId: Scalars['ID'];
   message: Scalars['String'];
 }>;
 
@@ -145,8 +145,8 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, name: string, avatar: string } | null | undefined };
 
 export type MessagesQueryVariables = Exact<{
-  cursor?: InputMaybe<Scalars['Float']>;
-  roomId: Scalars['Float'];
+  cursor?: InputMaybe<Scalars['ID']>;
+  roomId: Scalars['ID'];
 }>;
 
 
@@ -311,7 +311,7 @@ export type LeaveRoomMutationHookResult = ReturnType<typeof useLeaveRoomMutation
 export type LeaveRoomMutationResult = Apollo.MutationResult<LeaveRoomMutation>;
 export type LeaveRoomMutationOptions = Apollo.BaseMutationOptions<LeaveRoomMutation, LeaveRoomMutationVariables>;
 export const SendMessageDocument = gql`
-    mutation SendMessage($roomId: Float!, $message: String!) {
+    mutation SendMessage($roomId: ID!, $message: String!) {
   sendedMessage: sendMessage(roomId: $roomId, message: $message) {
     id
     message
@@ -383,7 +383,7 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const MessagesDocument = gql`
-    query Messages($cursor: Float, $roomId: Float!) {
+    query Messages($cursor: ID, $roomId: ID!) {
   messages(cursor: $cursor, roomId: $roomId) {
     cursor
     messages {

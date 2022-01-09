@@ -1,4 +1,4 @@
-mutation SendMessage($roomId: Float!, $message: String!) {
+mutation SendMessage($roomId: ID!, $message: String!) {
   sendedMessage: sendMessage(roomId: $roomId, message: $message) {
     id
     message
