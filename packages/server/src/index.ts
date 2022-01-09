@@ -1,5 +1,5 @@
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
@@ -7,6 +7,7 @@ import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import entities from './entities';
+import { getUser } from './utils';
 
 dotenv.config({ path: `${__dirname}/../../../.env` });
 
@@ -27,6 +28,11 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: async ({ req, res }: ExpressContext) => {
+      const user = await getUser(req);
+
+      return { req, res, user };
+    },
     schema,
   });
 
