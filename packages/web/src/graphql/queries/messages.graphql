@@ -1,0 +1,10 @@
+query Messages($cursor: Float, $roomId: Float!) {
+  messages(cursor: $cursor, roomId: $roomId) {
+    cursor
+    messages {
+      id
+      message
+      userId
+    }
+  }
+}

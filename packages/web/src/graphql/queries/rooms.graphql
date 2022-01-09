@@ -1,0 +1,8 @@
+query Rooms {
+  rooms {
+    id
+    name
+    invitationCode
+    adminId
+  }
+}

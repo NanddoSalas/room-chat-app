@@ -1,0 +1,7 @@
+mutation GoogleAuth($idToken: String!) {
+  me: googleAuth(idToken: $idToken) {
+    id
+    name
+    avatar
+  }
+}

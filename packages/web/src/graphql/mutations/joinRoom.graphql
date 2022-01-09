@@ -1,0 +1,8 @@
+mutation JoinRoom($invitationCode: String!) {
+  room: joinRoom(invitationCode: $invitationCode) {
+    id
+    name
+    invitationCode
+    adminId
+  }
+}
