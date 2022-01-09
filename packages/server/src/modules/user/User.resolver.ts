@@ -28,7 +28,7 @@ class UserResolver {
 
     if (user) {
       const accesToken = await createAccesToken(user);
-      res.cookie('accesToken', accesToken);
+      res.cookie('accessToken', accesToken);
     }
 
     return user;
