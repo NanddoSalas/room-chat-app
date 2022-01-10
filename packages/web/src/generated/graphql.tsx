@@ -13,10 +13,13 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: number;
 };
 
 export type Message = {
   __typename?: 'Message';
+  createdAt: Scalars['Timestamp'];
   id: Scalars['ID'];
   message: Scalars['String'];
   userId: Scalars['ID'];
@@ -150,7 +153,7 @@ export type MessagesQueryVariables = Exact<{
 }>;
 
 
-export type MessagesQuery = { __typename?: 'Query', messages: { __typename?: 'MessagesPayload', cursor?: string | null | undefined, messages: Array<{ __typename?: 'Message', id: string, message: string, userId: string }> } };
+export type MessagesQuery = { __typename?: 'Query', messages: { __typename?: 'MessagesPayload', cursor?: string | null | undefined, messages: Array<{ __typename?: 'Message', id: string, message: string, userId: string, createdAt: number }> } };
 
 export type RoomMembersQueryVariables = Exact<{
   roomId: Scalars['ID'];
@@ -390,6 +393,7 @@ export const MessagesDocument = gql`
       id
       message
       userId
+      createdAt
     }
   }
 }

@@ -5,6 +5,7 @@ query Messages($cursor: ID, $roomId: ID!) {
       id
       message
       userId
+      createdAt
     }
   }
 }

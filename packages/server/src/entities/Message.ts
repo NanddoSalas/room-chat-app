@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, GraphQLTimestamp, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -20,6 +20,7 @@ class Message extends BaseEntity {
   @Column()
   message: string;
 
+  @Field(() => GraphQLTimestamp)
   @CreateDateColumn()
   createdAt: Date;
 
