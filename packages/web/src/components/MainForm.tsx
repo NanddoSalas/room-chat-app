@@ -20,7 +20,10 @@ const MainForm = () => {
       client.cache.modify({
         fields: {
           rooms(currentRooms = []) {
-            return [...currentRooms, data.newRoom];
+            return [
+              ...currentRooms,
+              { __ref: client.cache.identify(data?.newRoom!) },
+            ];
           },
         },
       });
