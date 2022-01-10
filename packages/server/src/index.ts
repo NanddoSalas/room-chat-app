@@ -2,11 +2,14 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import dotenv from 'dotenv';
 import express from 'express';
+import { CloseCode } from 'graphql-ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
 import http from 'http';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import entities from './entities';
+import { WebSocketServer } from 'ws';
+import entities, { Member } from './entities';
 import { getUser } from './utils';
 
 dotenv.config({ path: `${__dirname}/../../../.env` });
@@ -29,7 +32,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: async ({ req, res }: ExpressContext) => {
-      const user = await getUser(req);
+      const user = await getUser(req.headers.authorization || '');
 
       return { req, res, user };
     },
@@ -48,6 +51,44 @@ const main = async () => {
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve),
+  );
+
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+  });
+
+  useServer(
+    {
+      schema,
+
+      context: async (ctx, _message, args) => {
+        const bearerHeader =
+          (ctx.connectionParams?.Authorization as string) || '';
+        const roomId = (args.variableValues?.roomId as string) || '';
+
+        if (!roomId || !bearerHeader)
+          return ctx.extra.socket.close(CloseCode.Forbidden, 'Forbidden');
+
+        const user = await getUser(bearerHeader);
+
+        if (!user)
+          return ctx.extra.socket.close(CloseCode.Forbidden, 'Forbidden');
+
+        const member = await Member.findOne({
+          where: {
+            userId: user!.id,
+            roomId,
+          },
+        });
+
+        if (!member)
+          return ctx.extra.socket.close(CloseCode.Forbidden, 'Forbidden');
+
+        return { ...ctx, user };
+      },
+    },
+    wsServer,
   );
 
   console.log(

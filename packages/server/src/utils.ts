@@ -1,5 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-import { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from './entities';
 import googleClient from './googleClient';
@@ -37,9 +36,7 @@ export const createAccesToken = async (user: User) => {
   return jwt.sign(payload, process.env.SECRET_KEY!);
 };
 
-export const getUser = async (req: Request) => {
-  const bearerHeader = req.headers.authorization;
-
+export const getUser = async (bearerHeader: string) => {
   if (bearerHeader) {
     const [, accesToken] = bearerHeader.split(' ');
 
@@ -54,5 +51,6 @@ export const getUser = async (req: Request) => {
       return undefined;
     }
   }
+
   return undefined;
 };
