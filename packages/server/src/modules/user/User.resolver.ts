@@ -16,7 +16,7 @@ class UserResolver {
   async user(
     @Arg('userId', () => ID) userId: number,
   ): Promise<User | undefined> {
-    return User.findOne(userId);
+    return User.findOne({ where: { id: userId } });
   }
 
   @Mutation(() => User, { nullable: true })
