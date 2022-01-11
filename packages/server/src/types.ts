@@ -7,3 +7,18 @@ export interface Context {
   res: Response;
   user?: User;
 }
+
+export interface NewMessagePayload {
+  messageId: string;
+  roomId: string;
+}
+
+export interface UserJoinedRoomPayload {
+  userId: string;
+  roomId: string;
+}
+
+export interface UserLeavedRoomPayload {
+  userId: string;
+  roomId: string;
+}

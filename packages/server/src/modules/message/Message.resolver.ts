@@ -1,7 +1,23 @@
-import { Arg, Ctx, ID, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  ID,
+  Mutation,
+  Publisher,
+  PubSub,
+  Query,
+  Resolver,
+  Root,
+  Subscription,
+} from 'type-graphql';
 import { AuthRequired } from '../../decorators';
-import { Member, Message, Room } from '../../entities';
-import { Context } from '../../types';
+import { Member, Message, Room, User } from '../../entities';
+import {
+  Context,
+  NewMessagePayload,
+  UserJoinedRoomPayload,
+  UserLeavedRoomPayload,
+} from '../../types';
 import MessagesPayload from './messages/MessagesPayload';
 
 @Resolver()
@@ -42,6 +58,7 @@ class MessageResolver {
     @Arg('message') message: string,
     @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
+    @PubSub('NEW_MESSAGE') publish: Publisher<NewMessagePayload>,
   ): Promise<Message | undefined> {
     const member = await Member.findOne({
       where: {
@@ -61,7 +78,48 @@ class MessageResolver {
     newMessage.room = Promise.resolve(room);
     await newMessage.save();
 
+    await publish({
+      messageId: newMessage.id.toString(),
+      roomId: roomId.toString(),
+    });
+
     return newMessage;
+  }
+
+  @Subscription(() => Message, {
+    topics: 'NEW_MESSAGE',
+    filter: ({ args, payload }) => args.roomId === payload.roomId,
+  })
+  async newMessage(
+    @Root() payload: NewMessagePayload,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Arg('roomId', () => ID) _roomId: string,
+  ): Promise<Message> {
+    return Message.findOneOrFail(payload.messageId);
+  }
+
+  @Subscription(() => User, {
+    topics: 'USER_JOINED_ROOM',
+    filter: ({ args, payload }) => args.roomId === payload.roomId,
+  })
+  async userJoinedRoom(
+    @Root() payload: UserJoinedRoomPayload,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Arg('roomId', () => ID) _roomId: string,
+  ): Promise<User> {
+    return User.findOneOrFail({ where: { id: payload.userId } });
+  }
+
+  @Subscription(() => String, {
+    topics: 'USER_LEAVED_ROOM',
+    filter: ({ args, payload }) => args.roomId === payload.roomId,
+  })
+  async userLeavedRoom(
+    @Root() payload: UserLeavedRoomPayload,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Arg('roomId', () => ID) _roomId: string,
+  ): Promise<string> {
+    return payload.userId;
   }
 }
 
