@@ -86,18 +86,24 @@ class RoomResolver {
     @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
   ): Promise<number | undefined> {
-    const members = await Member.find({
-      where: { roomId },
-      take: 2,
-      order: {
-        createdAt: 'ASC',
-      },
-    });
+    const room = await Room.findOne(roomId);
 
-    const admin = members[0];
-    const nextAdmin = members[1];
+    if (!room) return roomId;
 
-    if (admin.id === user!.id && nextAdmin) {
+    await Member.createQueryBuilder()
+      .delete()
+      .where('userId = :userId', {
+        userId: user!.id,
+      })
+      .andWhere('roomId = :roomId', { roomId })
+      .execute();
+
+    if (room.adminId === user!.id) {
+      const nextAdmin = await Member.findOne({
+        where: { roomId },
+        order: { createdAt: 'ASC' },
+      });
+
       if (nextAdmin) {
         await Room.createQueryBuilder('room')
           .update()
@@ -108,14 +114,6 @@ class RoomResolver {
         // TODO: delete room
       }
     }
-
-    await Member.createQueryBuilder()
-      .delete()
-      .where('userId = :userId', {
-        userId: user!.id,
-      })
-      .andWhere('roomId = :roomId', { roomId })
-      .execute();
 
     return roomId;
   }
