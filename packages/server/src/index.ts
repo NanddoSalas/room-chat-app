@@ -55,7 +55,7 @@ const main = async () => {
 
   const wsServer = new WebSocketServer({
     server: httpServer,
-    path: '/graphql',
+    path: '/subscriptions',
   });
 
   useServer(
