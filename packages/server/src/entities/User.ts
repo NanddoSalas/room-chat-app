@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Member, Message } from '.';
@@ -26,7 +25,7 @@ class User extends BaseEntity {
   @Column()
   avatar: string;
 
-  @PrimaryColumn()
+  @Column()
   googleId: string;
 
   @CreateDateColumn()
