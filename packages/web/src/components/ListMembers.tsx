@@ -3,10 +3,10 @@ import { useRoomMembersQuery } from '../generated/graphql';
 import MemberItem from './MemberItem';
 
 const ListMembers: React.FC<{ roomId: string }> = ({ roomId }) => {
-  const { data, loading } = useRoomMembersQuery({ variables: { roomId } });
+  const [{ data, fetching }] = useRoomMembersQuery({ variables: { roomId } });
   const members = data?.roomMembers;
 
-  if (loading) return <Spinner />;
+  if (fetching) return <Spinner />;
 
   if (!members) return null;
 

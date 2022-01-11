@@ -1,4 +1,3 @@
-import { useApolloClient } from '@apollo/client';
 import { Button, HStack, Input, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
@@ -9,39 +8,15 @@ import {
 const MainForm = () => {
   const [roomName, setRoomName] = useState('');
   const [invitationCode, setInvitationCode] = useState('');
-  const [createRoom] = useCreateRoomMutation();
-  const [joinRoom] = useJoinRoomMutation();
-  const client = useApolloClient();
+  const [, createRoom] = useCreateRoomMutation();
+  const [, joinRoom] = useJoinRoomMutation();
 
   const handleCreateRoom = async () => {
-    const { data } = await createRoom({ variables: { name: roomName } });
-
-    if (data?.newRoom) {
-      client.cache.modify({
-        fields: {
-          rooms(currentRooms = []) {
-            return [
-              ...currentRooms,
-              { __ref: client.cache.identify(data?.newRoom!) },
-            ];
-          },
-        },
-      });
-    }
+    createRoom({ name: roomName });
   };
 
   const handleJoinRoom = async () => {
-    const { data } = await joinRoom({ variables: { invitationCode } });
-
-    if (data?.room) {
-      client.cache.modify({
-        fields: {
-          rooms(currentRooms = []) {
-            return [...currentRooms, data.room];
-          },
-        },
-      });
-    }
+    joinRoom({ invitationCode });
   };
 
   return (

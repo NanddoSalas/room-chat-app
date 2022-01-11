@@ -7,9 +7,9 @@ const MessageItem: React.FC<{
   createdAt: number;
   right: boolean;
 }> = ({ message, userId, right }) => {
-  const { data, loading } = useUserQuery({ variables: { userId } });
+  const [{ data, fetching }] = useUserQuery({ variables: { userId } });
 
-  if (loading) return null;
+  if (fetching) return null;
 
   const avatar = data?.user?.avatar;
   const name = data?.user?.name;

@@ -15,7 +15,9 @@ import RoomPage from './RoomPage';
 
 const MainPage = () => {
   const [connectedRoom, setConnectedRoom] = useState<Room | null>(null);
-  const { data, loading } = useRoomsQuery();
+  const [{ data, fetching }] = useRoomsQuery({
+    requestPolicy: 'network-only',
+  });
 
   if (connectedRoom) {
     return (
@@ -32,7 +34,7 @@ const MainPage = () => {
 
         <Heading>My Rooms</Heading>
 
-        {loading ? (
+        {fetching ? (
           <Center>
             <Spinner />
           </Center>

@@ -6,19 +6,7 @@ import { MdChat } from 'react-icons/md';
 import { useGoogleAuthMutation } from '../generated/graphql';
 
 const StartPage = () => {
-  const [googleAuth] = useGoogleAuthMutation({
-    update(cache, { data }) {
-      if (data?.me) {
-        cache.modify({
-          fields: {
-            me() {
-              return data.me;
-            },
-          },
-        });
-      }
-    },
-  });
+  const [, googleAuth] = useGoogleAuthMutation();
   const { signIn, loaded } = useGoogleLogin({
     responseType: 'id_token',
     clientId:
@@ -27,7 +15,7 @@ const StartPage = () => {
       const tokenId: string | null = (res as any).tokenId;
 
       if (tokenId) {
-        await googleAuth({ variables: { idToken: tokenId } });
+        googleAuth({ idToken: tokenId });
       }
     },
   });

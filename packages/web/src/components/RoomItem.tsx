@@ -9,22 +9,10 @@ interface RoomItemProps {
 }
 
 const RoomItem: React.FC<RoomItemProps> = ({ id, name, onConnect }) => {
-  const [leaveRoom, { loading, client }] = useLeaveRoomMutation();
+  const [{ fetching }, leaveRoom] = useLeaveRoomMutation();
 
   const handleLeaveRoom = async () => {
-    const { data } = await leaveRoom({ variables: { roomId: id } });
-
-    if (data?.leavedRoomId) {
-      client.cache.modify({
-        fields: {
-          rooms(roomRefs = [], { readField }) {
-            return roomRefs.filter(
-              (roomRef: any) => readField('id', roomRef) !== id,
-            );
-          },
-        },
-      });
-    }
+    leaveRoom({ roomId: id });
   };
 
   return (
@@ -37,7 +25,7 @@ const RoomItem: React.FC<RoomItemProps> = ({ id, name, onConnect }) => {
           variant="ghost"
           fontSize="lg"
           rightIcon={<ArrowForwardIcon />}
-          isDisabled={loading}
+          isDisabled={fetching}
           onClick={onConnect}
         >
           Connect
@@ -47,7 +35,7 @@ const RoomItem: React.FC<RoomItemProps> = ({ id, name, onConnect }) => {
           colorScheme="red"
           variant="ghost"
           fontSize="lg"
-          isDisabled={loading}
+          isDisabled={fetching}
           onClick={handleLeaveRoom}
         >
           Leave

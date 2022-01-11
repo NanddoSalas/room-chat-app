@@ -4,13 +4,11 @@ import { MdLogout } from 'react-icons/md';
 import { useMeQuery } from '../generated/graphql';
 
 const MainHeader = () => {
-  const { data, client } = useMeQuery();
+  const [{ data }, callMeQuery] = useMeQuery();
 
   const handleLogout = async () => {
     Cookies.remove('accessToken');
-
-    await client.clearStore();
-    client.refetchQueries({ include: ['Me'] });
+    callMeQuery({ requestPolicy: 'network-only' });
   };
 
   return (

@@ -25,39 +25,15 @@ interface RoomPageProps extends Room {
 }
 
 const RoomPage: React.FC<RoomPageProps> = ({ id, name, disconnect }) => {
-  const { data } = useMessagesQuery({ variables: { roomId: id } });
-  const { data: meData } = useMeQuery();
-  const [sendMessage] = useSendMessageMutation();
+  const [{ data }] = useMessagesQuery({ variables: { roomId: id } });
+  const [{ data: meData }] = useMeQuery();
+  const [, sendMessage] = useSendMessageMutation();
   const showMembers = useBreakpointValue({ base: false, lg: true });
   const scrollbars = useRef<Scrollbars>(null);
   const [value, setValue] = useState('');
 
   const handleSendMessage = async () => {
-    await sendMessage({
-      variables: { message: value, roomId: id },
-      optimisticResponse: {
-        sendedMessage: {
-          id: 'temp-id',
-          __typename: 'Message',
-          message: 'value',
-          userId: meData?.me?.id!,
-        },
-      },
-      update: (cache, { data }) => {
-        const ref = cache.identify(data?.sendedMessage!);
-
-        cache.modify({
-          fields: {
-            messages: (payload) => {
-              return {
-                ...payload,
-                messages: [...payload.messages, { __ref: ref }],
-              };
-            },
-          },
-        });
-      },
-    });
+    await sendMessage({ message: value, roomId: id });
   };
 
   useEffect(() => {

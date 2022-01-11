@@ -8,6 +8,7 @@
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@graphql-codegen/typescript-urql": "^3.4.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -15,8 +16,11 @@
     "@types/node": "^16.11.19",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@urql/devtools": "^2.0.3",
+    "@urql/exchange-graphcache": "^4.3.6",
     "framer-motion": "^5",
     "graphql": "15.8.0",
+    "graphql-ws": "^5.5.5",
     "js-cookie": "^3.0.1",
     "react": "^17.0.2",
     "react-custom-scrollbars-2": "^4.4.0",
@@ -25,6 +29,7 @@
     "react-icons": "^4.3.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.5.4",
+    "urql": "^2.0.6",
     "web-vitals": "^2.1.2"
   },
   "scripts": {

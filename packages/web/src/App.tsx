@@ -4,9 +4,9 @@ import AuthPage from './pages/AuthPage';
 import MainPage from './pages/MainPage';
 
 const App = () => {
-  const { data, loading } = useMeQuery();
+  const [{ data, fetching }] = useMeQuery();
 
-  if (loading) {
+  if (fetching) {
     return (
       <Flex h="100vh" w="full" align="center" justify="center">
         <Spinner size="xl" />
