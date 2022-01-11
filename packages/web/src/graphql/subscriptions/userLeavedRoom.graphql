@@ -1,0 +1,3 @@
+subscription UserLeavedRoom($roomId: ID!) {
+  userLeavedRoom(roomId: $roomId)
+}

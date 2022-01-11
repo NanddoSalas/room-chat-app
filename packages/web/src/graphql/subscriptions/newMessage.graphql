@@ -1,0 +1,8 @@
+subscription NewMessage($roomId: ID!) {
+  newMessage(roomId: $roomId) {
+    id
+    message
+    userId
+    createdAt
+  }
+}

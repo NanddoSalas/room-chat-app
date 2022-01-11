@@ -1,0 +1,7 @@
+subscription UserJoinedRoom($roomId: ID!) {
+  userJoinedRoom(roomId: $roomId) {
+    id
+    name
+    avatar
+  }
+}
