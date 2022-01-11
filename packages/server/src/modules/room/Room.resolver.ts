@@ -1,8 +1,21 @@
 import short from 'short-uuid';
-import { Arg, Ctx, ID, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  ID,
+  Mutation,
+  Publisher,
+  PubSub,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import { AuthRequired } from '../../decorators';
 import { Member, Room, User } from '../../entities';
-import { Context } from '../../types';
+import {
+  Context,
+  UserJoinedRoomPayload,
+  UserLeavedRoomPayload,
+} from '../../types';
 
 @Resolver()
 class RoomResolver {
@@ -67,6 +80,7 @@ class RoomResolver {
   async joinRoom(
     @Arg('invitationCode') invitationCode: string,
     @Ctx() { user }: Context,
+    @PubSub('USER_JOINED_ROOM') publish: Publisher<UserJoinedRoomPayload>,
   ): Promise<Room | undefined> {
     const room = await Room.findOne({ where: { invitationCode } });
 
@@ -77,6 +91,8 @@ class RoomResolver {
     member.room = Promise.resolve(room);
     await member.save();
 
+    publish({ userId: user!.id.toString(), roomId: room.id.toString() });
+
     return room;
   }
 
@@ -85,6 +101,7 @@ class RoomResolver {
   async leaveRoom(
     @Arg('roomId', () => ID) roomId: number,
     @Ctx() { user }: Context,
+    @PubSub('USER_LEAVED_ROOM') publish: Publisher<UserLeavedRoomPayload>,
   ): Promise<number | undefined> {
     const room = await Room.findOne(roomId);
 
@@ -114,6 +131,8 @@ class RoomResolver {
         // TODO: delete room
       }
     }
+
+    publish({ userId: user!.id.toString(), roomId: roomId.toString() });
 
     return roomId;
   }
