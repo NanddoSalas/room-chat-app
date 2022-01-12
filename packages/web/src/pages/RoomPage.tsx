@@ -1,13 +1,15 @@
 import {
+  Box,
   Container,
   Flex,
   HStack,
   IconButton,
+  Stack,
   Textarea,
   useBreakpointValue,
   Wrap,
 } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { MdSend } from 'react-icons/md';
 import ListMembers from '../components/ListMembers';
@@ -42,10 +44,6 @@ const RoomPage: React.FC<RoomPageProps> = ({ id, name, disconnect }) => {
     await sendMessage({ message: value, roomId: id });
   };
 
-  useEffect(() => {
-    scrollbars.current?.scrollToBottom();
-  }, []);
-
   return (
     <Flex direction="column" minH="100vh">
       <RoomHeader roomName={name} roomId={id} onDisconnect={disconnect} />
@@ -68,9 +66,12 @@ const RoomPage: React.FC<RoomPageProps> = ({ id, name, disconnect }) => {
 
           <Flex direction="column" flex="1">
             <Flex py={4} flex="1 1 0" minH="0px">
-              <Scrollbars autoHide ref={scrollbars}>
-                <Wrap flex="1" spacing={4} px={4}>
-                  {/* TODO: fix messages layout */}
+              <Scrollbars
+                autoHide
+                ref={scrollbars}
+                renderView={(props) => <Box {...props} />}
+              >
+                <Stack flex="1" spacing={4} px={4} direction="column-reverse">
                   {data?.messages.messages.map(
                     ({ id, message, userId, createdAt }) => (
                       <MessageItem
@@ -82,7 +83,7 @@ const RoomPage: React.FC<RoomPageProps> = ({ id, name, disconnect }) => {
                       />
                     ),
                   )}
-                </Wrap>
+                </Stack>
               </Scrollbars>
             </Flex>
 
