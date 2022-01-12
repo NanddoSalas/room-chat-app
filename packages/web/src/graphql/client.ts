@@ -1,5 +1,8 @@
 import { devtoolsExchange } from '@urql/devtools';
-import { cacheExchange } from '@urql/exchange-graphcache';
+import {
+  cacheExchange,
+  OptimisticMutationResolver,
+} from '@urql/exchange-graphcache';
 import { createClient as createWSClient } from 'graphql-ws';
 import Cookies from 'js-cookie';
 import {
@@ -21,8 +24,24 @@ import {
   RoomMembersQueryVariables,
   RoomsDocument,
   RoomsQuery,
+  SendMessageMutationVariables,
   User,
 } from '../generated/graphql';
+
+const sendMessage: OptimisticMutationResolver<
+  SendMessageMutationVariables,
+  Message
+> = (args, cache) => {
+  const query = cache.readQuery<MeQuery>({ query: MeDocument });
+
+  return {
+    __typename: 'Message',
+    id: '0',
+    userId: query?.me?.id!,
+    createdAt: Date.now(),
+    message: args.message,
+  };
+};
 
 const wsClient = createWSClient({
   url: 'ws://localhost:4000/subscriptions',
@@ -47,6 +66,9 @@ export const client = createClient({
     devtoolsExchange,
     dedupExchange,
     cacheExchange({
+      optimistic: {
+        sendMessage,
+      },
       updates: {
         Mutation: {
           googleAuth(result, _args, cache, _info) {
@@ -110,6 +132,24 @@ export const client = createClient({
                 },
               );
             }
+          },
+          sendMessage(result, args, cache, _info) {
+            const message = result.sendedMessage as Message;
+            const roomId = args.roomId as string;
+
+            cache.updateQuery<MessagesQuery, MessagesQueryVariables>(
+              {
+                query: MessagesDocument,
+                variables: { roomId },
+              },
+              (data) => {
+                if (!data) return null;
+
+                data.messages.messages.push(message);
+
+                return data;
+              },
+            );
           },
         },
         Subscription: {
