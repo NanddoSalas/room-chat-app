@@ -124,7 +124,7 @@ class RoomResolver {
       if (nextAdmin) {
         await Room.createQueryBuilder('room')
           .update()
-          .set({ adminId: nextAdmin.id })
+          .set({ adminId: nextAdmin.userId })
           .where('room.id = :roomId', { roomId })
           .execute();
       } else {
