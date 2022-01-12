@@ -6,13 +6,14 @@ const MessageItem: React.FC<{
   userId: string;
   createdAt: number;
   right: boolean;
-}> = ({ message, userId, right }) => {
+}> = ({ message, userId, createdAt, right }) => {
   const [{ data, fetching }] = useUserQuery({ variables: { userId } });
 
   if (fetching) return null;
 
   const avatar = data?.user?.avatar;
   const name = data?.user?.name;
+  const date = new Date(createdAt);
 
   return (
     <Stack
@@ -26,7 +27,9 @@ const MessageItem: React.FC<{
       <VStack align={right ? 'end' : 'start'}>
         <Stack direction={right ? 'row-reverse' : 'row'} align="end">
           <Heading size="md">{name}</Heading>
-          <Text fontSize="xs">TODO: day/month/year - hours:munites</Text>
+          <Text fontSize="xs">{`${date.getDate()}/${
+            date.getMonth() + 1
+          }/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`}</Text>
         </Stack>
 
         <Box p={4} bg="whiteAlpha.50" borderRadius="xl">
