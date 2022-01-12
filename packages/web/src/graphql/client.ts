@@ -158,6 +158,10 @@ export const client = createClient({
             const message = result.newMessage as Message;
             const roomId = args.roomId as string;
 
+            const query = cache.readQuery<MeQuery>({ query: MeDocument });
+
+            if (query?.me?.id === message.userId) return;
+
             cache.updateQuery<MessagesQuery, MessagesQueryVariables>(
               {
                 query: MessagesDocument,
