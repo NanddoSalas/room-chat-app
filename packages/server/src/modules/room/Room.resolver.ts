@@ -10,7 +10,7 @@ import {
   Resolver,
 } from 'type-graphql';
 import { AuthRequired } from '../../decorators';
-import { Member, Room, User } from '../../entities';
+import { Member, Message, Room, User } from '../../entities';
 import {
   Context,
   UserJoinedRoomPayload,
@@ -128,7 +128,15 @@ class RoomResolver {
           .where('room.id = :roomId', { roomId })
           .execute();
       } else {
-        // TODO: delete room
+        Room.createQueryBuilder()
+          .delete()
+          .where('id = :roomId', { roomId })
+          .execute();
+
+        Message.createQueryBuilder()
+          .delete()
+          .where('roomId = :roomId', { roomId })
+          .execute();
       }
     }
 
