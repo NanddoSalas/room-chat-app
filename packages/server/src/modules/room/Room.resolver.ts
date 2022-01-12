@@ -128,15 +128,16 @@ class RoomResolver {
           .where('room.id = :roomId', { roomId })
           .execute();
       } else {
-        Room.createQueryBuilder()
-          .delete()
-          .where('id = :roomId', { roomId })
-          .execute();
-
         Message.createQueryBuilder()
           .delete()
           .where('roomId = :roomId', { roomId })
-          .execute();
+          .execute()
+          .then(() => {
+            Room.createQueryBuilder()
+              .delete()
+              .where('id = :roomId', { roomId })
+              .execute();
+          });
       }
     }
 
