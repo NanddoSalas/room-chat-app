@@ -15,6 +15,8 @@ const MessageItem: React.FC<{
   const name = data?.user?.name;
   const date = new Date(createdAt);
 
+  const __html = message.replace(/(\n+)+$/g, '').replaceAll('\n', '</br>');
+
   return (
     <Stack
       w="full"
@@ -33,14 +35,11 @@ const MessageItem: React.FC<{
         </Stack>
 
         <Box p={4} bg="whiteAlpha.50" borderRadius="xl">
-          <Text>
-            {message.split('\\n').map((x, index, data) => (
-              <span key={index}>
-                {x}
-                {data.length > index + 1 && <br />}
-              </span>
-            ))}
-          </Text>
+          <Text
+            dangerouslySetInnerHTML={{
+              __html,
+            }}
+          />
         </Box>
       </VStack>
     </Stack>
