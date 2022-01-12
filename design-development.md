@@ -131,4 +131,4 @@ This is a Full Stack `JavaScript/TypeScript` project that uses `GraphQL` for the
 - [GraphQL ws](https://github.com/enisdenjo/graphql-ws) handles the GraphQL Subscription layer.
 - [React](https://reactjs.org) because It's Simple to Read and Easy to Use.
 - [React Google Login](https://github.com/anthonyjgrove/react-google-login) abstracs the OAuth flow to authenticate with Google
-- [Apollo Client](https://www.apollographql.com/docs/react/) takes care of executing the GraphQL operations and manage the state of the app.
+- [urql](https://formidable.com/open-source/urql/) takes care of executing the GraphQL operations and manage the state of the app.
