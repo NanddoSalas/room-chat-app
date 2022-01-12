@@ -174,7 +174,6 @@ export const client = createClient({
           userLeavedRoom(result, args, cache, _info) {
             const userId = result.userLeavedRoom as string;
             const roomId = args.roomId as string;
-            console.log(userId);
 
             cache.updateQuery<RoomMembersQuery, RoomMembersQueryVariables>(
               {
@@ -183,12 +182,10 @@ export const client = createClient({
               },
               (data) => {
                 if (!data) return null;
-                console.log(data);
 
                 data.roomMembers = data.roomMembers.filter(
                   ({ id }) => id !== userId,
                 );
-                console.log(data);
 
                 return data;
               },
