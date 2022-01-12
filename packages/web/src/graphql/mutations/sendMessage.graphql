@@ -3,5 +3,6 @@ mutation SendMessage($roomId: ID!, $message: String!) {
     id
     message
     userId
+    createdAt
   }
 }

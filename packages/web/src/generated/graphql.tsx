@@ -162,7 +162,7 @@ export type SendMessageMutationVariables = Exact<{
 }>;
 
 
-export type SendMessageMutation = { __typename?: 'Mutation', sendedMessage?: { __typename?: 'Message', id: string, message: string, userId: string } | null | undefined };
+export type SendMessageMutation = { __typename?: 'Mutation', sendedMessage?: { __typename?: 'Message', id: string, message: string, userId: string, createdAt: number } | null | undefined };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -274,6 +274,7 @@ export const SendMessageDocument = gql`
     id
     message
     userId
+    createdAt
   }
 }
     `;
