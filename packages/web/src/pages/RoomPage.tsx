@@ -17,7 +17,10 @@ import {
   Room,
   useMeQuery,
   useMessagesQuery,
+  useNewMessageSubscription,
   useSendMessageMutation,
+  useUserJoinedRoomSubscription,
+  useUserLeavedRoomSubscription,
 } from '../generated/graphql';
 
 interface RoomPageProps extends Room {
@@ -31,6 +34,9 @@ const RoomPage: React.FC<RoomPageProps> = ({ id, name, disconnect }) => {
   const showMembers = useBreakpointValue({ base: false, lg: true });
   const scrollbars = useRef<Scrollbars>(null);
   const [value, setValue] = useState('');
+  useUserJoinedRoomSubscription({ variables: { roomId: id } });
+  useUserLeavedRoomSubscription({ variables: { roomId: id } });
+  useNewMessageSubscription({ variables: { roomId: id } });
 
   const handleSendMessage = async () => {
     await sendMessage({ message: value, roomId: id });
