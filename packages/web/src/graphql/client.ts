@@ -145,7 +145,7 @@ export const client = createClient({
               (data) => {
                 if (!data) return null;
 
-                data.messages.messages.push(message);
+                data.messages.messages.unshift(message);
 
                 return data;
               },
@@ -207,7 +207,7 @@ export const client = createClient({
               (data) => {
                 if (!data) return null;
 
-                data.messages.messages.push(message);
+                data.messages.messages.unshift(message);
 
                 return data;
               },
