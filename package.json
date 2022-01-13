@@ -4,6 +4,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build:server": "lerna run build --scope @room-chat-app/server",
+    "db:setup": "lerna run db:setup --scope @room-chat-app/server",
+    "start": "lerna run start --stream"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   },
