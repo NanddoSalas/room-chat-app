@@ -23,7 +23,7 @@ const ListMessages: React.FC<ListMessagesInterface> = ({ roomId }) => {
 
   return (
     <Flex py={4} flex="1 1 0" minH="0px">
-      <Scrollbars ref={scrollbar} onUpdate={(x) => console.log(x)}>
+      <Scrollbars ref={scrollbar}>
         <Stack flex="1" spacing={4} px={4} direction="column-reverse">
           {pageVariables.map((variables, index) => (
             <MessageList
