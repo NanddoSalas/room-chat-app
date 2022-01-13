@@ -86,6 +86,12 @@ class RoomResolver {
 
     if (!room) return undefined;
 
+    const isMember = await Member.count({
+      where: { userId: user!.id, roomId: room.id },
+    });
+
+    if (isMember) return undefined;
+
     const member = new Member();
     member.user = Promise.resolve(user!);
     member.room = Promise.resolve(room);
