@@ -26,7 +26,10 @@ const MessageList: React.FC<MessageListProps> = ({
     requestPolicy: 'network-only',
   });
 
-  const canLoadMore = isLastPage && !!data?.messages.cursor;
+  const canLoadMore =
+    isLastPage &&
+    !!data?.messages.cursor &&
+    data.messages.messages.length === 20;
 
   useEffect(() => {
     if (isFirstPage && !fetching && data) {
