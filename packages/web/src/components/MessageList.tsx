@@ -30,7 +30,7 @@ const MessageList: React.FC<MessageListProps> = ({
 
   useEffect(() => {
     if (isFirstPage && !fetching && data) {
-      if (data.messages.messages[0].userId === meData?.me?.id) {
+      if (data.messages?.messages[0]?.userId === meData?.me?.id) {
         onShouldScrollDown(true);
       } else {
         onShouldScrollDown(false);
