@@ -39,6 +39,7 @@ const MessageList: React.FC<MessageListProps> = ({
         onShouldScrollDown(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   if (fetching) {
