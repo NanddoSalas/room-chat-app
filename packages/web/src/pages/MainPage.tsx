@@ -45,11 +45,12 @@ const MainPage = () => {
                 <Text>You are not part of any room</Text>
               </Center>
             ) : (
-              data?.rooms.map(({ id, name }, index) => (
+              data?.rooms.map(({ id, name, invitationCode }, index) => (
                 <RoomItem
                   key={id}
                   id={id}
                   name={name}
+                  invitationCode={invitationCode}
                   onConnect={() => setConnectedRoom(data.rooms[index])}
                 />
               ))
