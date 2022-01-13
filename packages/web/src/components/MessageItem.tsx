@@ -29,9 +29,9 @@ const MessageItem: React.FC<{
       <VStack align={right ? 'end' : 'start'}>
         <Stack direction={right ? 'row-reverse' : 'row'} align="end">
           <Heading size="md">{name}</Heading>
-          <Text fontSize="xs">{`${date.getDate()}/${
-            date.getMonth() + 1
-          }/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`}</Text>
+          <Text fontSize="xs">
+            {`${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`}
+          </Text>
         </Stack>
 
         <Box p={4} bg="whiteAlpha.50" borderRadius="xl">
