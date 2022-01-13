@@ -24,7 +24,7 @@ const MessageItem: React.FC<{
       justify={right ? 'end' : 'start'}
       direction={right ? 'row-reverse' : 'row'}
     >
-      <Avatar name={name} src={avatar} />
+      <Avatar name={name} src={avatar} loading="eager" ignoreFallback />
 
       <VStack align={right ? 'end' : 'start'}>
         <Stack direction={right ? 'row-reverse' : 'row'} align="end">

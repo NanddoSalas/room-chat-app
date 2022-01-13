@@ -14,7 +14,13 @@ const MainHeader = () => {
   return (
     <Flex w="full" justify="space-around" align="center">
       <HStack>
-        <Avatar name={data?.me?.name} src={data?.me?.avatar} size="xl" />
+        <Avatar
+          name={data?.me?.name}
+          src={data?.me?.avatar}
+          size="xl"
+          loading="eager"
+          ignoreFallback
+        />
         <Text fontSize="2xl">{data?.me?.name}</Text>
       </HStack>
 

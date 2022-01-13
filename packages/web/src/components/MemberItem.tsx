@@ -6,7 +6,7 @@ const MemberItem: React.FC<{ name: string; avatar: string }> = ({
 }) => {
   return (
     <HStack>
-      <Avatar name={name} src={avatar} />
+      <Avatar name={name} src={avatar} loading="eager" ignoreFallback />
       <Heading size="md">{name}</Heading>
     </HStack>
   );
