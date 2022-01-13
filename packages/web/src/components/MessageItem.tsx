@@ -13,7 +13,9 @@ const MessageItem: React.FC<{
 
   const avatar = data?.user?.avatar;
   const name = data?.user?.name;
-  const date = new Date(createdAt);
+  // const date = new Date(createdAt);
+
+  // TODO: fix timezone issue
 
   const __html = message.replace(/(\n+)+$/g, '').replaceAll('\n', '</br>');
 
@@ -29,9 +31,9 @@ const MessageItem: React.FC<{
       <VStack align={right ? 'end' : 'start'}>
         <Stack direction={right ? 'row-reverse' : 'row'} align="end">
           <Heading size="md">{name}</Heading>
-          <Text fontSize="xs">
+          {/* <Text fontSize="xs">
             {`${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`}
-          </Text>
+          </Text> */}
         </Stack>
 
         <Box p={4} bg="whiteAlpha.50" borderRadius="xl">
