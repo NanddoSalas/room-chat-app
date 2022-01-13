@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "build:server": "lerna run build --scope @room-chat-app/server",
+    "build:web": "lerna run build --scope @room-chat-app/web",
     "db:setup": "lerna run db:setup --scope @room-chat-app/server",
     "start": "lerna run start --stream"
   },
