@@ -1,6 +1,6 @@
 # Room Chat App
 
-todo: description
+Full Stack Web App that allows you to send messages through rooms.
 
 [Design and Development of the app](design-development.md)
 
