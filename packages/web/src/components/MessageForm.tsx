@@ -7,8 +7,10 @@ const MessageForm: React.FC<{ roomId: string }> = ({ roomId }) => {
   const [value, setValue] = useState('');
   const [, sendMessage] = useSendMessageMutation();
   const handleSendMessage = async () => {
-    sendMessage({ message: value, roomId });
-    setValue('');
+    if (value) {
+      sendMessage({ message: value, roomId });
+      setValue('');
+    }
   };
 
   return (
