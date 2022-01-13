@@ -44,7 +44,7 @@ const sendMessage: OptimisticMutationResolver<
 };
 
 const wsClient = createWSClient({
-  url: 'ws://localhost:4000/subscriptions',
+  url: process.env.REACT_APP_SUBSCRIPTIONS_URL!,
   connectionParams: () => {
     const accessToken = Cookies.get('accessToken');
 
@@ -53,7 +53,7 @@ const wsClient = createWSClient({
 });
 
 export const client = createClient({
-  url: 'http://localhost:4000/graphql',
+  url: process.env.REACT_APP_GRAPHQL_URL!,
   fetchOptions: () => {
     const accessToken = Cookies.get('accessToken');
 

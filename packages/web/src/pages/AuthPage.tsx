@@ -9,8 +9,7 @@ const StartPage = () => {
   const [, googleAuth] = useGoogleAuthMutation();
   const { signIn, loaded } = useGoogleLogin({
     responseType: 'id_token',
-    clientId:
-      '1015273775735-3p5t6586cm93ck8lm4eue2m6e59c8lfd.apps.googleusercontent.com',
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID!,
     onSuccess: async (res) => {
       const tokenId: string | null = (res as any).tokenId;
 
