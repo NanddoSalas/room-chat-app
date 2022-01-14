@@ -39,7 +39,10 @@ class UserResolver {
 
   @Mutation(() => Boolean)
   logout(@Ctx() { res }: Context) {
-    res.clearCookie('accessToken');
+    res.clearCookie('accessToken', {
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
     return true;
   }
 }
