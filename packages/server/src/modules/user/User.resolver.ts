@@ -29,12 +29,18 @@ class UserResolver {
     if (user) {
       const accesToken = await createAccesToken(user);
       res.cookie('accessToken', accesToken, {
-        sameSite: 'none',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         secure: process.env.NODE_ENV === 'production',
       });
     }
 
     return user;
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Ctx() { res }: Context) {
+    res.clearCookie('accessToken');
+    return true;
   }
 }
 

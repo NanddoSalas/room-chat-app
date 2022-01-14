@@ -67,6 +67,12 @@ export const client = createClient({
               });
             }
           },
+          logout(_result, _args, cache, _info) {
+            cache.updateQuery<MeQuery>({ query: MeDocument }, () => ({
+              __typename: 'Query',
+              me: null,
+            }));
+          },
           createRoom(result, _args, cache, _info) {
             const newRoom = result.newRoom as Room | undefined;
 

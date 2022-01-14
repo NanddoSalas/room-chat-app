@@ -37,6 +37,7 @@ export type Mutation = {
   googleAuth?: Maybe<User>;
   joinRoom?: Maybe<Room>;
   leaveRoom: Scalars['ID'];
+  logout: Scalars['Boolean'];
   sendMessage?: Maybe<Message>;
 };
 
@@ -156,6 +157,11 @@ export type LeaveRoomMutationVariables = Exact<{
 
 export type LeaveRoomMutation = { __typename?: 'Mutation', leavedRoomId: string };
 
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
+
 export type SendMessageMutationVariables = Exact<{
   roomId: Scalars['ID'];
   message: Scalars['String'];
@@ -267,6 +273,15 @@ export const LeaveRoomDocument = gql`
 
 export function useLeaveRoomMutation() {
   return Urql.useMutation<LeaveRoomMutation, LeaveRoomMutationVariables>(LeaveRoomDocument);
+};
+export const LogoutDocument = gql`
+    mutation Logout {
+  logout
+}
+    `;
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
 };
 export const SendMessageDocument = gql`
     mutation SendMessage($roomId: ID!, $message: String!) {

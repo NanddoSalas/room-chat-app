@@ -1,14 +1,13 @@
 import { Avatar, Flex, HStack, IconButton, Text } from '@chakra-ui/react';
-import Cookies from 'js-cookie';
 import { MdLogout } from 'react-icons/md';
-import { useMeQuery } from '../generated/graphql';
+import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 
 const MainHeader = () => {
-  const [{ data }, callMeQuery] = useMeQuery();
+  const [{ data }] = useMeQuery();
+  const [, logout] = useLogoutMutation();
 
   const handleLogout = async () => {
-    Cookies.remove('accessToken');
-    callMeQuery({ requestPolicy: 'network-only' });
+    await logout();
   };
 
   return (
