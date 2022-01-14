@@ -1,5 +1,6 @@
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
+import cookie from 'cookie';
 import dotenv from 'dotenv';
 import express from 'express';
 import { CloseCode } from 'graphql-ws';
@@ -32,7 +33,8 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: async ({ req, res }: ExpressContext) => {
-      const user = await getUser(req.headers.authorization || '');
+      const cookies = cookie.parse(req.headers.cookie || '');
+      const user = await getUser(cookies.accessToken || '');
 
       return { req, res, user };
     },
@@ -63,14 +65,13 @@ const main = async () => {
       schema,
 
       context: async (ctx, _message, args) => {
-        const bearerHeader =
-          (ctx.connectionParams?.Authorization as string) || '';
+        const cookies = cookie.parse(ctx.extra.request.headers.cookie || '');
         const roomId = (args.variableValues?.roomId as string) || '';
 
-        if (!roomId || !bearerHeader)
+        if (!roomId || !cookies.accessToken)
           return ctx.extra.socket.close(CloseCode.Forbidden, 'Forbidden');
 
-        const user = await getUser(bearerHeader);
+        const user = await getUser(cookies.accessToken || '');
 
         if (!user)
           return ctx.extra.socket.close(CloseCode.Forbidden, 'Forbidden');

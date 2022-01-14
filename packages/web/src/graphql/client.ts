@@ -4,7 +4,6 @@ import {
   OptimisticMutationResolver,
 } from '@urql/exchange-graphcache';
 import { createClient as createWSClient } from 'graphql-ws';
-import Cookies from 'js-cookie';
 import {
   createClient,
   dedupExchange,
@@ -45,23 +44,11 @@ const sendMessage: OptimisticMutationResolver<
 
 const wsClient = createWSClient({
   url: process.env.REACT_APP_SUBSCRIPTIONS_URL!,
-  connectionParams: () => {
-    const accessToken = Cookies.get('accessToken');
-
-    return { Authorization: accessToken ? `Bearer ${accessToken}` : '' };
-  },
 });
 
 export const client = createClient({
   url: process.env.REACT_APP_GRAPHQL_URL!,
-  fetchOptions: () => {
-    const accessToken = Cookies.get('accessToken');
-
-    return {
-      headers: { authorization: accessToken ? `Bearer ${accessToken}` : '' },
-      credentials: 'include',
-    };
-  },
+  fetchOptions: () => ({ credentials: 'include' }),
   exchanges: [
     devtoolsExchange,
     dedupExchange,

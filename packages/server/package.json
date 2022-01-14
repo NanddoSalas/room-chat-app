@@ -12,6 +12,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/cookie": "^0.4.1",
     "@types/express": "^4.17.13",
     "@types/http-server": "^0.12.1",
     "@types/jsonwebtoken": "^8.5.6",
@@ -31,6 +32,7 @@
     "apollo-server-core": "^3.6.1",
     "apollo-server-express": "^3.6.1",
     "class-validator": "^0.13.2",
+    "cookie": "^0.4.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "google-auth-library": "^7.11.0",

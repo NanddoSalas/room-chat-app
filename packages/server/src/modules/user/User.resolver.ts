@@ -28,7 +28,10 @@ class UserResolver {
 
     if (user) {
       const accesToken = await createAccesToken(user);
-      res.cookie('accessToken', accesToken);
+      res.cookie('accessToken', accesToken, {
+        sameSite: 'none',
+        secure: process.env.NODE_ENV === 'production',
+      });
     }
 
     return user;

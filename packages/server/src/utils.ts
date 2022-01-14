@@ -36,20 +36,16 @@ export const createAccesToken = async (user: User) => {
   return jwt.sign(payload, process.env.SECRET_KEY!);
 };
 
-export const getUser = async (bearerHeader: string) => {
-  if (bearerHeader) {
-    const [, accesToken] = bearerHeader.split(' ');
+export const getUser = async (accessToken: string) => {
+  try {
+    const payload = jwt.verify(accessToken, process.env.SECRET_KEY!);
+    const user = await User.findOne({
+      where: { id: (payload as any).userId },
+    });
 
-    try {
-      const payload = jwt.verify(accesToken, process.env.SECRET_KEY!);
-      const user = await User.findOne({
-        where: { id: (payload as any).userId },
-      });
-
-      if (user?.tokenVersion === (payload as any).tokenVersion) return user;
-    } catch (err) {
-      return undefined;
-    }
+    if (user?.tokenVersion === (payload as any).tokenVersion) return user;
+  } catch (err) {
+    return undefined;
   }
 
   return undefined;
