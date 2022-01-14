@@ -2,6 +2,8 @@
 
 Full Stack Web App that allows you to send messages through rooms.
 
+[Try Demo](https://room-chat-web-app.netlify.app)
+
 [Design and Development of the app](design-development.md)
 
 ## Packages
