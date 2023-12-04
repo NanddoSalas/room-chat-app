@@ -1,6 +1,6 @@
 # Room Chat App
 
-Full Stack Web App that allows you to send messages through rooms.
+Real-time messaging application designed to facilitate seamless communication through virtual rooms. This web application offers users the ability to create, join, and participate in different chat rooms.
 
 [Try Demo](https://room-chat-web-app.netlify.app)
 
