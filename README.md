@@ -2,6 +2,13 @@
 
 Real-time messaging application designed to facilitate seamless communication through virtual rooms. This web application offers users the ability to create, join, and participate in different chat rooms.
 
+## Features
+
+* Real-Time Communication: Experience instant messaging with real-time updates.
+* Multi-Room Functionality: Create or join multiple rooms, each serving as a dedicated space for specific topics.
+* User-Friendly Interface: The app has an intuitive, respoinsive and user-friendly interface, making it easy to navigate through different rooms effortlessly.
+* Google Sign-In: It provides a convenient way for users to access the app using their Google Account, eliminating the need for manual account creation.
+
 [Try Demo](https://room-chat-web-app.netlify.app)
 
 [Design and Development of the app](design-development.md)
